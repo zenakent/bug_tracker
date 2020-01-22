@@ -1,0 +1,34 @@
+a {
+  color: #00B7FF;
+}
+
+#login {
+  height: 100vh;
+  width: 100vw;
+  background-image: url("../images/pexels-photo-2563028.jpeg");
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+#register {
+  height: 100vh;
+  width: 100vw;
+  background-image: url("../images/pexels-photo-2563028.jpeg");
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#DemoUserSignin {
+  height: 100vh;
+  width: 100vw;
+  background-image: url("../images/pexels-photo-2563028.jpeg");
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
