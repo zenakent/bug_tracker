@@ -1,0 +1,84 @@
+<% include ../partials/header %>
+<% include ../partials/sideTopBar.ejs %>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="card shadow mb-4">
+        <div class="card-header py-3 bg-info">
+          <h6 class="m-0 font-weight-bold text-white"><%= foundProject.title %></h6>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <h6 class="card-subtitle mb-2 text-muted px-3"><%= foundProject.description %></h6>
+            <hr>
+          </div>
+          <div class="row flex-column flex-lg-row">
+            <div class="col-sm-12 col-lg-4">
+              <hr>
+              <h5 class="card-title order-md-0" style="height: 38px">Personnel</h5>
+              <hr>
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">Username</th>
+                    <th scope="col">Role</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% foundProject.personnel.forEach(user => { %>
+                  <tr>
+                    <td><%= user.username%></td>
+                    <td><%= user.role%></td>
+                  </tr>
+                  <% }) %>
+                </tbody>
+              </table>
+            </div>
+            <div class="col-sm-12 col-lg-8 order-md-1">
+              <hr>
+              <h5 class="card-title">Tickets <a href="/tickets/<%= foundProject.title %>/create"
+                  class="btn btn-primary btn-icon-split ml-5">
+                  <span class="icon text-white-50">
+                    <i class="fas fa-ticket-alt"></i>
+                  </span>
+                  <span class="text">Submit a new ticket</span>
+                </a></h5>
+              <hr>
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">Title</th>
+                    <th scope="col">Submitter</th>
+                    <th scope="col">Developer</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Created At</th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% foundProject.tickets.forEach(ticket => { %>
+                  <tr>
+                    <td><%= ticket.title %></td>
+                    <td><%= ticket.submitter %></td>
+                    <td><%= ticket.developer %></td>
+                    <td><%= ticket.status %></td>
+                    <td><%= moment(ticket.createdAt).format('lll') %></td>
+                    <td><a href="/tickets/details/<%= ticket.title %>">More Details</a></td>
+                  </tr>
+                  <% }) %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+</div>
+
+
+<% include ../partials/botSideTopBar.ejs %>
+<% include ../partials/footer %>

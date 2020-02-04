@@ -1,0 +1,156 @@
+<% include ../partials/header %>
+<% include ../partials/sideTopBar.ejs %>
+<%= console.log(ticket) %>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-6">
+      <div class="card shadow mb-4">
+        <div class="card-header py-3 bg-primary">
+          <h6 class="m-0 font-weight-bold text-white">Details for <span
+              style='text-decoration: underline;'><%= ticket.title %></span></h6>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-6">
+              <h5 class="card-title">Ticket Title</h5>
+              <p><%= ticket.title %></p>
+            </div>
+            <div class="col-6">
+              <h5 class="card-title">Ticket Description</h5>
+              <p><%= ticket.description %></p>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-6">
+              <h5 class="card-title">Project</h5>
+              <p><%= ticket.project %></p>
+            </div>
+            <div class="col-6">
+              <h5 class="card-title">Ticket Priority</h5>
+              <p><%= ticket.priority %></p>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-6">
+              <h5 class="card-title">Ticket Status</h5>
+              <p><%= ticket.status %></p>
+            </div>
+            <div class="col-6">
+              <h5 class="card-title">Ticket Type</h5>
+              <p><%= ticket.ticket_type %></p>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-6">
+              <h5 class="card-title">Assigned Developer</h5>
+              <p><%= ticket.developer %></p>
+            </div>
+            <div class="col-6">
+              <h5 class="card-title">Submitter</h5>
+              <p><%= ticket.submitter %></p>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-6">
+              <h5 class="card-title">Ticket Created</h5>
+              <p><%= moment(ticket.createdAt).format('lll') %></p>
+            </div>
+            <div class="col-6">
+              <h5 class="card-title">Update Ticket</h5>
+              <a href="/tickets/details/edit/<%= ticket._id %>" class="btn btn-info">Update Ticket</a>
+            </div>
+          </div>
+          <hr>
+        </div>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="card shadow mb-4">
+        <div class="card-header py-3 bg-primary">
+          <h6 class="m-0 font-weight-bold text-white">Comments</h6>
+        </div>
+        <div class="card-body">
+          <h6 class="card-subtitle mb-2 text-muted">Add a Comment</h6>
+          <form action="/comments/create" method="POST">
+            <div class="row mb-3">
+              <div class="col-10">
+                <input class="form-control" type="text" name="message" placeholder="Add your comment here">
+              </div>
+              <div class="col-2">
+                <button type="submit" class="btn btn-primary">Add</button>
+              </div>
+            </div>
+            <input type="hidden" name="ticket_id" value="<%= ticket._id %>">
+          </form>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Commenter</th>
+                <th scope="col">Message</th>
+                <th scope="col">Created At</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% ticket.comments.forEach(msg => { %>
+              <tr>
+                <td><%= msg.commenter %></td>
+                <td><%= msg.message %></td>
+                <td><%= moment(msg.createdAt).format('lll') %></td>
+                <% if (currentUser && msg.commenter === currentUser.username) { %>
+                <td>
+                  <form action="/comments/delete/<%= msg._id %>?_method=DELETE" method="POST">
+                    <button type="submit" class="btn btn-xs btn-danger">Delete</button>
+                  </form>
+                </td>
+                <% } %>
+              </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-6">
+      <div class="card shadow mb-4">
+        <div class="card-header py-3 bg-primary">
+          <h6 class="m-0 font-weight-bold text-white">Ticket History</h6>
+        </div>
+        <div class="card-body">
+          <h6 class="card-subtitle mb-2 text-muted">All History Info for this ticket</h6>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Property</th>
+                <th scope="col">Old Value</th>
+                <th scope="col">New Value</th>
+                <th scope="col">Date Changed</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% ticket.ticket_history.forEach(prop => { %>
+                <tr>
+                  <td><%= `${prop.property.charAt(0).toUpperCase()}${prop.property.slice(1)}`%></td>
+                  <td><%= prop.old_value %></td>
+                  <td><%= prop.new_value %></td>
+                  <td><%= moment(prop.date_changed).format('lll') %></td>
+                </tr>
+              <% }) %> 
+              
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<% include ../partials/botSideTopBar.ejs %>
+<% include ../partials/footer %>

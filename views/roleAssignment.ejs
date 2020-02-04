@@ -1,13 +1,73 @@
 <% include ./partials/header %>
 <% include ./partials/sideTopBar.ejs %>
 
+
+
+
 <div class="container-fluid">
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Manage User Roles</h1>
   </div>
+  <div class="row">
+    <div class="col-3">
+      <div class="card shadow mb-4">
+        <div class="card-header py-3">
+          <h6 class="m-0 font-weight-bold text-primary">Select one or more users</h6>
+        </div>
+        <div class="card-body">
+          <form action="/users/roleAssignment?_method=PUT" method="POST">
+            <select name="selectUser" class="custom-select" multiple>
+              <!-- <option selected>--Select User--</option> -->
+              <% foundUsers.forEach(user => { %>
+              <option value="<%= user.username%>" name="<%= user.username%>"><%= user.username%></option>
+              <% }) %>
+            </select>
+            <hr>
+            <div class="input-group mb-3">
+              <select class="custom-select" id="inputGroupSelect01" name="selectRole">
+                <option selected>--Select Role/None--</option>
+                <option value="admin">Admin</option>
+                <option value="developer">Developer</option>
+                <option value="none">None</option>
+                <option value="project_manager">Project Manager</option>
+                <option value="submitter">Submitter</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-9">
+      <div class="card shadow mb-4">
+        <div class="card-header py-3 bg-primary">
+          <h6 class="m-0 font-weight-bold text-white">Personnel</h6>
+        </div>
+        <div class="card-body">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Username</th>
+                <th scope="col">Role</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% foundUsers.forEach(user => { %>
+              <tr>
+                <td><%= user.username%></td>
+                <td><%= user.role %></td>
+                <% }) %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
 </div>
+
 
 <% include ./partials/botSideTopBar.ejs %>
 <% include ./partials/footer %>

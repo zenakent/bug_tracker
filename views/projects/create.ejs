@@ -1,0 +1,44 @@
+<% include ../partials/header %>
+<% include ../partials/sideTopBar.ejs %>
+
+<div class="container-fluid">
+
+  <div class="row justify-content-center">
+    <div class="col-8">
+      <div class="card shadow mb-4">
+        <div class="card-header py-3 bg-info">
+          <h6 class="m-0 font-weight-bold text-white">Create New Project</h6>
+        </div>
+        <div class="card-body">
+          <form action="/projects/create" method="POST">
+            <div class="form-group">
+              <label for="projectTitle">Project Title</label>
+              <input type="text" name="title" class="form-control" placeholder="Project Title" required>
+            </div>
+            <div class="form-group">
+              <label for="projectDescription">Project Description</label>
+              <input type="text" name="description" class="form-control" placeholder="Project Description" required>
+            </div>
+            <div class="form-group">
+              <label for="projectDeveloper">Project Personnel</label>
+              <select class="custom-select" name="personnel" multiple required>
+                <% foundUsers.forEach(user => { %>
+                <option value="<%= user._id%>"><%= user.username %></option>
+                <% }) %>
+
+              </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+
+<% include ../partials/botSideTopBar.ejs %>
+<% include ../partials/footer %>

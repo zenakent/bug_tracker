@@ -1,0 +1,53 @@
+<% include ../partials/header %>
+<% include ../partials/sideTopBar.ejs %>
+<div class="container-fluid">
+  <!-- <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <a href="/tickets/create" class="btn btn-primary btn-icon-split">
+      <span class="icon text-white-50">
+        <i class="fas fa-project-diagram"></i>
+      </span>
+      <span class="text">Submit a new ticket</span>
+    </a>
+  </div> -->
+  <div class="row">
+    <div class="card shadow mb-4">
+      <div class="card-header py-3 bg-info">
+        <h6 class="m-0 font-weight-bold text-white">My Tickets</h6>
+      </div>
+      <div class="card-body">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col" width="500">Project Name</th>
+              <th scope="col" width="500">Ticket Title</th>
+              <th scope="col" width="500">Ticket Description</th>
+              <th scope="col" width="500">Priority</th>
+              <th scope="col" width="500">Status</th>
+              <th scope="col" width="500"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% tickets.tickets.forEach(tick => {  %>
+            <tr>
+              <td><a href="/projects/details/<%= tick.project %>"><%= tick.project %></a></td>
+              <td><%= tick.title %></td>
+              <td><%= tick.description %></td>
+              <td><%= tick.priority %></td>
+              <td><%= tick.status %></td>
+              <td><a href="/tickets/details/<%= tick.title %>">More Details</a></td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+
+  </div>
+
+
+</div>
+
+
+<% include ../partials/botSideTopBar.ejs %>
+<% include ../partials/footer %>

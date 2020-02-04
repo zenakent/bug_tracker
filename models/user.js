@@ -6,18 +6,19 @@ let UserSchema = new mongoose.Schema({
   password: String,
   first_name: String,
   last_name: String,
-  is_Admin: {
-    type: Boolean,
-    default: false
+  role: {
+    type: String,
+    enum: ['admin', 'project_manager', 'developer', 'submitter', 'none'],
+    default: 'none'
   },
-  is_Project_Manager: {
-    type: Boolean,
-    default: false
-  },
-  is_Developer: {
-    type: Boolean,
-    default: false
-  },
+  tickets: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Ticket'
+  }],
+  projects: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Project'
+  }],
 })
 
 UserSchema.plugin(passportLocalMongoose)

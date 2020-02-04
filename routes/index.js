@@ -19,7 +19,7 @@ router.get("/register", function (req, res) {
 
 
 router.post("/register", function (req, res) {
-  console.log(req.body)
+
   db.User.register(new db.User({
     username: req.body.username
   }), req.body.password, function (err, user) {
@@ -28,9 +28,7 @@ router.post("/register", function (req, res) {
       return res.render("register")
     }
     passport.authenticate("local")(req, res, function () {
-      res.redirect("/users", {
-        user: user
-      })
+      res.redirect("/users")
     })
   })
 })

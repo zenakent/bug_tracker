@@ -1,0 +1,95 @@
+<% include ../partials/header %>
+<% include ../partials/sideTopBar.ejs %>
+
+
+<div class="container-fluid d-flex justify-content-center">
+  <div class="col-8">
+    <div class="card shadow mb-4">
+      <div class="card-header py-3 bg-primary">
+        <h6 class="m-0 font-weight-bold text-white ">Update Ticket</h6>
+      </div>
+      <div class="card-body">
+        <h6 class="card-subtitle mb-2 text-muted">Change the ticket properties</h6>
+        <hr>
+        <form action="/tickets/details/edit/<%= ticket._id %>?_method=PUT" method="POST">
+          <div class="row">
+            <div class="col-6">
+              <div class="form-group">
+                <label for="Ticket Title">Ticket Title</label>
+                <input type="text" class="form-control" id="ticketTitle" name="title" value="<%= ticket.title %>">
+              </div>
+              <div class="form-group">
+                <label for="Ticket Title">Ticket Priority</label>
+                <select class="custom-select" name="priority" id="ticket_priority" required>
+                  <% let options = ticket.schema.path('priority').enumValues %>                  
+                  <% for (let x = 0; x < options.length; x++)  { %>
+                  <% if (options[x] === ticket.priority) { %>
+                    <option value="<%= options[x] %>" selected><%= options[x] %></option>
+                  <% } else { %>
+                    <option value="<%= options[x] %>"><%= options[x] %></option>  
+                  <% } %>
+                  <% } %>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="projectTitle">Ticket type</label>
+                <select class="custom-select" name="ticket_type" required>
+                  <% options = ticket.schema.path('ticket_type').enumValues %>                  
+                  <% for (let x = 0; x < options.length; x++)  { %>
+                    <% if (options[x] === ticket.ticket_type) { %>
+                      <option value="<%= options[x] %>" selected><%= options[x] %></option>
+                    <% } else { %>
+                      <option value="<%= options[x] %>"><%= options[x] %></option>  
+                    <% } %>
+                    <% } %>
+                  <option value="Bugs/Errors">Bugs/Errors</option>
+                  <option value="Aesthetic">Aesthetic</option>
+                  <option value="Feature Request">Feature Request</option>
+                  <option value="Technical Issue">Technical Issue</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-group">
+                <label for="Ticket Description">Ticket Description</label>
+                <input type="text" class="form-control" id="ticketDescription" name="description" value="<%= ticket.description %>">
+              </div>
+              <div class="form-group">
+                <label for="projectDeveloper">Assigned Developer</label>
+                <select class="custom-select" name="developer" required>
+                  <% project.personnel.forEach(dev => { %>
+                  <% if (dev.role == 'developer') { %>
+                  <% if (dev.username === ticket.developer)  { %>
+                    <option value="<%= dev.username %>" selected><%= dev.username %></option>
+                  <% } else { %>
+                  <option value="<%= dev.username %>"><%= dev.username %></option>
+                  <% } %>
+                  <% } %>
+                  <% }) %>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="Ticket Status">Ticket Status</label>
+                <select class="custom-select" name="status" required>
+                  <% options = ticket.schema.path('status').enumValues %>                 
+                  <% for (let x = 0; x < options.length; x++)  { %>
+                    <% if (options[x] === ticket.status) { %>
+                      <option value="<%= options[x] %>" selected><%= options[x] %></option>
+                    <% } else { %>
+                      <option value="<%= options[x] %>"><%= options[x] %></option>  
+                    <% } %>
+                    <% } %>
+                </select>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <button type="submit" class="btn btn-primary btn-block">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% include ../partials/botSideTopBar.ejs %>
+<% include ../partials/footer %>
