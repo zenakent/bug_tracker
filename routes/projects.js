@@ -1,15 +1,15 @@
-let express = require('express');
-let router = express.Router();
-let db = require('../models')
+const express = require('express');
+const router = express.Router();
+const db = require('../models')
 
-let {
+const {
   isLoggedIn
 } = require("../middleware/index.js");
 
 router.get('/', isLoggedIn, async function (req, res) {
   try {
     // console.log(req.user.populate('projects'))
-    let foundProjects = await db.User.findById(req.user._id).populate('projects').exec();
+    const foundProjects = await db.User.findById(req.user._id).populate('projects').exec();
 
     res.render('projects/index', {
       foundProjects
@@ -26,7 +26,7 @@ router.get('/', isLoggedIn, async function (req, res) {
 
 //project details page
 router.get('/details/:project_title', isLoggedIn, async (req, res) => {
-  let foundProject = await db.Project.findOne({
+  const foundProject = await db.Project.findOne({
     title: req.params.project_title
   }).populate('personnel').populate('tickets').exec()
 
@@ -38,7 +38,7 @@ router.get('/details/:project_title', isLoggedIn, async (req, res) => {
 //get create page
 router.get('/create', isLoggedIn, async function (req, res) {
   try {
-    let foundUsers = await db.User.find({
+    const foundUsers = await db.User.find({
       $or: [{
         role: 'developer'
       }, {

@@ -1,15 +1,15 @@
 //manage project users/personnel
-let express = require('express');
-let router = express.Router();
-let db = require('../models')
+const express = require('express');
+const router = express.Router();
+const db = require('../models')
 
-let {
+const {
   isLoggedIn
 } = require("../middleware/index.js");
 
 router.get('/', isLoggedIn, async function (req, res) {
   try {
-    let foundProjects = await db.User.findById(req.user._id).populate('projects').exec();
+    const foundProjects = await db.User.findById(req.user._id).populate('projects').exec();
     res.render('manageUsers/index', {
       foundProjects
     })
@@ -21,46 +21,37 @@ router.get('/', isLoggedIn, async function (req, res) {
 
 router.get('/:project_title/manageProjectUsers', isLoggedIn, async function (req, res) {
   try {
-    let foundProject = await db.Project.findOne({
+    const foundProject = await db.Project.findOne({
       title: req.params.project_title
     }).populate('personnel', {
       username: true
     })
 
-    let foundUsers = await db.User.find({}, {
+    const foundUsers = await db.User.find({}, {
       username: true
     })
 
-    let personnel = [],
-      users = []
+    const personnel = JSON.parse(JSON.stringify(foundProject.personnel))
+    const users = JSON.parse(JSON.stringify(foundUsers))
 
-    for (x of foundProject.personnel) {
-      personnel.push(x.username)
-    }
-    for (x of foundUsers) {
-      users.push(x.username)
-    }
-
-    function diffArray(arr1, arr2) {
-      return arr1
-        .concat(arr2)
-        .filter(item => !arr1.includes(item) || !arr2.includes(item));
-    }
-
-    let notPersonnel = diffArray(personnel, users)
-
-    let arr = []
-    for (let x of foundUsers) {
-      for (let y of notPersonnel) {
-        if (y === x.username) {
-          arr.push(x)
-        }
+    function comparer(otherArray) {
+      return function (current) {
+        return otherArray.filter(function (other) {
+          return other.username == current.username && other._id == current._id
+        }).length == 0;
       }
     }
+
+    let onlyInA = personnel.filter(comparer(users));
+    let onlyInB = users.filter(comparer(personnel));
+
+    result = onlyInA.concat(onlyInB);
+
+
     res.render('manageUsers/edit', {
       foundProject,
       foundUsers,
-      notPersonnel: arr
+      notPersonnel: result
     })
   } catch (error) {
     console.log(error)

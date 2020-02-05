@@ -1,8 +1,8 @@
-let express = require('express');
-let router = express.Router();
-let db = require('../models')
+const express = require('express');
+const router = express.Router();
+const db = require('../models')
 
-let {
+const {
   isLoggedIn
 } = require("../middleware/index.js");
 

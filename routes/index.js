@@ -1,7 +1,7 @@
-let express = require('express');
-let router = express.Router();
-let db = require('../models')
-let passport = require('passport')
+const express = require('express');
+const router = express.Router();
+const db = require('../models')
+const passport = require('passport')
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -19,7 +19,6 @@ router.get("/register", function (req, res) {
 
 
 router.post("/register", function (req, res) {
-
   db.User.register(new db.User({
     username: req.body.username
   }), req.body.password, function (err, user) {

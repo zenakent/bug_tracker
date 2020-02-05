@@ -1,15 +1,15 @@
-let express = require('express');
-let router = express.Router();
-let db = require('../models')
+const express = require('express');
+const router = express.Router();
+const db = require('../models')
 
-let {
+const {
   isLoggedIn
 } = require("../middleware/index.js");
 
 //index page
 router.get('/', isLoggedIn, async (req, res) => {
   try {
-    let tickets = await db.User.findById(req.user._id).populate('tickets').exec();
+    const tickets = await db.User.findById(req.user._id).populate('tickets').exec();
     res.render('tickets/index', {
       tickets
     })
@@ -22,14 +22,14 @@ router.get('/', isLoggedIn, async (req, res) => {
 router.get('/:project_name/create', isLoggedIn, async function (req, res) {
   try {
 
-    let project = await db.Project.findOne({
+    const project = await db.Project.findOne({
       title: req.params.project_name
     }).populate('personnel', {
       role: true,
       username: true,
       _id: true
     })
-    let user = await db.User.findById(req.user._id, {
+    const user = await db.User.findById(req.user._id, {
       username: true,
       _id: true
     })
@@ -70,7 +70,7 @@ router.post('/:project_name/create', isLoggedIn, async function (req, res) {
 router.get('/details/:ticket_title', isLoggedIn, async function (req, res) {
   try {
     //look for ticket id instead. same title bug //mak
-    let ticket = await db.Ticket.findOne({
+    const ticket = await db.Ticket.findOne({
       title: req.params.ticket_title
     }).populate('comments')
     res.render('tickets/details', {
@@ -85,8 +85,8 @@ router.get('/details/:ticket_title', isLoggedIn, async function (req, res) {
 //get ticket edit page
 router.get('/details/edit/:ticket_id', isLoggedIn, async function (req, res) {
   try {
-    let ticket = await db.Ticket.findById(req.params.ticket_id)
-    let project = await db.Project.findOne({
+    const ticket = await db.Ticket.findById(req.params.ticket_id)
+    const project = await db.Project.findOne({
       title: ticket.project
     }).populate('personnel', {
       role: true,
