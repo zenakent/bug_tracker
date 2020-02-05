@@ -106,18 +106,22 @@ router.get('/details/edit/:ticket_id', isLoggedIn, async function (req, res) {
 //ticket history route(more like edit route)
 router.put('/details/edit/:ticket_id', isLoggedIn, async function (req, res) {
   try {
-    let ticket = await db.Ticket.findByIdAndUpdate(req.params.ticket_id)    
-    for (const prop in req.body) {      
-      let pushIntoHistory = {property: null, old_value: null, new_value: null}      
-      if (ticket[prop] !== req.body[prop]) {        
+    let ticket = await db.Ticket.findByIdAndUpdate(req.params.ticket_id)
+    for (const prop in req.body) {
+      let pushIntoHistory = {
+        property: null,
+        old_value: null,
+        new_value: null
+      }
+      if (ticket[prop] !== req.body[prop]) {
         pushIntoHistory.property = prop
         pushIntoHistory.old_value = ticket[prop]
-        ticket[prop] = req.body[prop]       
-        pushIntoHistory.new_value = req.body[prop]        
+        ticket[prop] = req.body[prop]
+        pushIntoHistory.new_value = req.body[prop]
         ticket.ticket_history.push(pushIntoHistory)
       }
-    }    
-    await ticket.save()    
+    }
+    await ticket.save()
     res.redirect(`/tickets/details/${ticket.title}`)
   } catch (error) {
     console.log(error)

@@ -1,0 +1,43 @@
+<% include ../partials/header %>
+<% include ../partials/sideTopBar.ejs %>
+<div class="container-fluid">
+  <div class="row">
+    <div class="card shadow mb-4">
+      <div class="card-header py-3 bg-info">
+        <h6 class="m-0 font-weight-bold text-white">Projects</h6>
+      </div>
+      <div class="card-body">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col" width="500">Project Name</th>
+              <th scope="col" width="500">Description</th>
+              <th scope="col" width="500"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% foundProjects.projects.forEach(project => { %>
+            <tr>
+              <td><%= project.title %></td>
+              <td><%= project.description %></td>
+              <td>
+                <ul>
+                  <li><a href="/manageUsers/<%= project.title %>/manageProjectUsers">Manage Users</a></li>
+                </ul>
+              </td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+
+  </div>
+
+
+</div>
+
+
+<% include ../partials/botSideTopBar.ejs %>
+<% include ../partials/footer %>

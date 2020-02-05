@@ -16,6 +16,7 @@ let usersRouter = require('./routes/users');
 let projectRouter = require('./routes/projects');
 let ticketRouter = require('./routes/tickets');
 let commentRouter = require('./routes/comments');
+let manageUsersRouter = require('./routes/manageUsers')
 let app = express();
 
 //import models
@@ -67,6 +68,7 @@ app.use('/users', usersRouter);
 app.use('/projects', projectRouter);
 app.use('/tickets', ticketRouter);
 app.use('/comments', commentRouter);
+app.use('/manageUsers', manageUsersRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

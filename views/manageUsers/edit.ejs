@@ -1,0 +1,51 @@
+<% include ../partials/header %>
+<% include ../partials/sideTopBar.ejs %>
+
+<div class="container-fluid d-flex justify-content-center">
+  <div class="col-8">
+    <div class="card shadow mb-4">
+      <div class="card-header py-3 bg-primary">
+        <h6 class="m-0 font-weight-bold text-white">Manage Personnel for <%= foundProject.title %></h6>
+      </div>
+      <div class="card-body">
+        <form action="/manageUsers/<%= foundProject.title %>/manageProjectUsers?_method=PUT" method="POST">
+          <div class="row">
+            <!-- Left side select -->
+
+            <div class="col-xs-5 col-md-5 col-sm-5">
+              <h5 class="card-title">Unassigned Personnel</h5>
+              <select name="from[]" id="mySideToSideSelect" class="form-control" size="8" multiple="multiple">
+                <% notPersonnel.forEach(user => { %>
+                <option value="<%= user._id%>"><%= user.username %></option>
+                <% }) %>
+              </select>
+            </div>
+
+            <!-- Action buttons -->
+            <div class="col-xs-2 col-md-2 col-sm-2 d-flex justify-content-center flex-column">
+              <button type="button" id="mySideToSideSelect_rightSelected" class="btn btn-block bg-primary text-white"><i
+                  class="fas fa-chevron-circle-right"></i></button>
+              <button type="button" id="mySideToSideSelect_leftSelected" class="btn btn-block bg-dark text-white"><i
+                  class="fas fa-chevron-circle-left"></i></button>
+            </div>
+
+            <!-- Right side select -->
+            <div class="col-xs-5 col-md-5 col-sm-5">
+              <h5 class="card-title">Assigned Personnel</h5>
+              <select name="personnel" id="mySideToSideSelect_to" class="form-control" size="8" multiple="multiple">
+                <% foundProject.personnel.forEach(person => { %>
+                <option value="<%= person._id %>"><%= person.username %></option>
+                <% }) %>
+              </select>
+            </div>
+          </div>
+          <hr>
+          <button type="submit" class="btn btn-primary btn-block">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% include ../partials/botSideTopBar.ejs %>
+<% include ../partials/footer %>
