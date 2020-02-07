@@ -1,14 +1,13 @@
 <% include ../partials/header %>
 <% include ../partials/sideTopBar.ejs %>
 
-
-<link rel="stylesheet" href="/css/datatables.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
 <script type="text/javascript" charset="utf8" src="/js/dataTables.js"></script>
 <div class="container-fluid">
   <div class="row">
     <div class="col-6">
       <div class="card shadow mb-4">
-        <div class="card-header py-3 bg-primary">
+        <div class="card-header py-3 bg-info">
           <h6 class="m-0 font-weight-bold text-white">Details for <span
               style='text-decoration: underline;'><%= ticket.title %></span></h6>
         </div>
@@ -64,7 +63,7 @@
             </div>
             <div class="col-6">
               <h5 class="card-title">Update Ticket</h5>
-              <a href="/tickets/details/edit/<%= ticket._id %>" class="btn btn-info">Update Ticket</a>
+              <a href="/tickets/details/edit/<%= ticket._id %>" class="btn btn-primary">Update Ticket</a>
             </div>
           </div>
           <hr>
@@ -73,7 +72,7 @@
     </div>
     <div class="col-6">
       <div class="card shadow mb-4">
-        <div class="card-header py-3 bg-primary">
+        <div class="card-header py-3 bg-info">
           <h6 class="m-0 font-weight-bold text-white">Comments</h6>
         </div>
         <div class="card-body">
@@ -101,7 +100,7 @@
               </tr>
             </thead>
             <tbody>
-              <% ticket.comments.forEach(msg => { %>
+              <% ticket.comments.reverse().forEach(msg => { %>
               <tr>
                 <td><%= msg.commenter %></td>
                 <td><%= msg.message %></td>
@@ -125,7 +124,7 @@
   <div class="row">
     <div class="col-6">
       <div class="card shadow mb-4">
-        <div class="card-header py-3 bg-primary">
+        <div class="card-header py-3 bg-info">
           <h6 class="m-0 font-weight-bold text-white">Ticket History</h6>
         </div>
         <div class="card-body">
@@ -140,7 +139,7 @@
               </tr>
             </thead>
             <tbody>
-              <% ticket.ticket_history.forEach(prop => { %>
+              <% ticket.ticket_history.reverse().forEach(prop => { %>
               <tr>
                 <td><%= `${prop.property.charAt(0).toUpperCase()}${prop.property.slice(1)}`%></td>
                 <td><%= prop.old_value %></td>

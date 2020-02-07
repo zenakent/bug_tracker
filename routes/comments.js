@@ -15,6 +15,7 @@ router.post('/create', isLoggedIn, async function (req, res) {
     let comment = await db.Comment.create(req.body);
     comment.ticket = req.body.ticket_id
     comment.commenter = req.user.username;
+    comment.createdAt = Date.now()
     comment.save()
     let ticket = await db.Ticket.findById(req.body.ticket_id)
     ticket.comments.push(comment._id)
@@ -31,7 +32,7 @@ router.post('/create', isLoggedIn, async function (req, res) {
 // })
 
 //delete comment
-router.delete('/delete/:id', async (req, res) => {
+router.delete('/delete/:id', isLoggedIn, async (req, res) => {
   try {
     let foundComment = await db.Comment.findById(req.params.id)
     foundComment.remove()

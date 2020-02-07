@@ -15,7 +15,7 @@ let TicketSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ['New', 'Open', 'In progress', 'Resolved', 'More Info Required'],
+    enum: ['New', 'Open', 'In Progress', 'Resolved', 'More Info Required'],
     default: 'New',
   },
   createdAt: {

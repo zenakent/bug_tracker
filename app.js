@@ -1,23 +1,26 @@
-let createError = require('http-errors');
-let express = require('express');
-let path = require('path');
-let cookieParser = require('cookie-parser');
-let logger = require('morgan');
-let bodyParser = require('body-parser');
-let passport = require('passport')
-let LocalStrategy = require('passport-local')
-let passportLocalMongoose = require('passport-local-mongoose')
-let methodOverride = require("method-override"); //Lets you use HTTP verbs such as PUT or DELETE in places where the client doesn't support it.
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const bodyParser = require('body-parser');
+const passport = require('passport')
+const LocalStrategy = require('passport-local')
+const passportLocalMongoose = require('passport-local-mongoose')
+const methodOverride = require("method-override"); //Lets you use HTTP verbs such as PUT or DELETE in places where the client doesn't support it.
+
 
 
 //requiring routes
-let indexRouter = require('./routes/index');
-let usersRouter = require('./routes/users');
-let projectRouter = require('./routes/projects');
-let ticketRouter = require('./routes/tickets');
-let commentRouter = require('./routes/comments');
-let manageUsersRouter = require('./routes/manageUsers')
-let app = express();
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+const projectRouter = require('./routes/projects');
+const ticketRouter = require('./routes/tickets');
+const commentRouter = require('./routes/comments');
+const manageUsersRouter = require('./routes/manageUsers')
+const chartsApiRouter = require('./routes/chartsAPI')
+
+const app = express();
 
 //import models
 const db = require("./models");
@@ -50,7 +53,9 @@ app.use(passport.session())
 
 passport.serializeUser(db.User.serializeUser())
 passport.deserializeUser(db.User.deserializeUser())
-passport.use(new LocalStrategy(db.User.authenticate()));
+passport.use(new LocalStrategy({
+  usernameField: 'email'
+}, db.User.authenticate()));
 
 
 //locals
@@ -69,10 +74,11 @@ app.use('/projects', projectRouter);
 app.use('/tickets', ticketRouter);
 app.use('/comments', commentRouter);
 app.use('/manageUsers', manageUsersRouter);
+app.use('/api/charts', chartsApiRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
-  res.render('404page');
+  res.render('http_response/404page');
 });
 
 // error handler

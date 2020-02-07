@@ -21,7 +21,7 @@ router.get('/roleAssignment', isLoggedIn, function (req, res, next) {
     .catch(err => console.log(err))
 })
 
-router.post('/roleAssignment', function (req, res) {
+router.put('/roleAssignment', isLoggedIn, function (req, res) {
   db.User.find({
       username: req.body.selectUser
     })

@@ -2,10 +2,17 @@ let mongoose = require('mongoose')
 let passportLocalMongoose = require('passport-local-mongoose')
 
 let UserSchema = new mongoose.Schema({
-  username: String,
+  username: {
+    type: String,
+    unique: true
+  },
   password: String,
   first_name: String,
   last_name: String,
+  email: {
+    type: String,
+    unique: true
+  },
   role: {
     type: String,
     enum: ['admin', 'project_manager', 'developer', 'submitter', 'none'],
@@ -21,6 +28,8 @@ let UserSchema = new mongoose.Schema({
   }],
 })
 
-UserSchema.plugin(passportLocalMongoose)
+UserSchema.plugin(passportLocalMongoose, {
+  usernameField: 'email'
+})
 
 module.exports = mongoose.model('User', UserSchema)

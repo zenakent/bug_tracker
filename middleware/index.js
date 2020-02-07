@@ -11,4 +11,35 @@
     }
   };
 
+  middlewareObj.isAdmin = function (req, res, next) {
+    console.log(req.user)
+    if (req.user.role === 'admin') {
+      return next();
+    } else {
+      console.log('not admin')
+      //should redirect to an unauthorized page
+      res.render('http_response/401page')
+    }
+  };
+
+  middlewareObj.isProjectManager = function (req, res, next) {
+    console.log(req.user)
+    if (req.user.role === 'project_manager') {
+      return next();
+    } else {
+      console.log('not project_manager')
+      res.render('http_response/401page')
+    }
+  };
+
+  middlewareObj.isDeveloper = function (req, res, next) {
+    console.log(req.user)
+    if (req.user.role === 'developer') {
+      return next();
+    } else {
+      console.log('not developer')
+      res.render('http_response/401page')
+    }
+  };
+
   module.exports = middlewareObj;

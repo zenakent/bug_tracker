@@ -111,7 +111,8 @@ router.put('/details/edit/:ticket_id', isLoggedIn, async function (req, res) {
       let pushIntoHistory = {
         property: null,
         old_value: null,
-        new_value: null
+        new_value: null,
+        date_changed: Date.now()
       }
       if (ticket[prop] !== req.body[prop]) {
         pushIntoHistory.property = prop
