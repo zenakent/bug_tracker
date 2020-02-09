@@ -1,8 +1,8 @@
-let mongoose = require('mongoose')
-let Project = require('./project')
-let User = require('./user')
+const mongoose = require('mongoose')
+const Project = require('./project')
+const User = require('./user')
 
-let TicketSchema = new mongoose.Schema({
+const TicketSchema = new mongoose.Schema({
   title: String,
   description: String,
   submitter: {
