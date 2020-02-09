@@ -21,6 +21,8 @@ const manageUsersRouter = require('./routes/manageUsers')
 const chartsApiRouter = require('./routes/chartsAPI')
 
 const app = express();
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
 
 //import models
 const db = require("./models");
@@ -46,6 +48,11 @@ app.use(require('express-session')({
   resave: false,
   saveUninitialized: false
 }))
+
+app.use(function (req, res, next) {
+  res.io = io;
+  next();
+});
 
 //use passport 
 app.use(passport.initialize())
@@ -92,4 +99,9 @@ app.use(function (err, req, res, next) {
   res.render('error');
 });
 
-module.exports = app;
+
+// module.exports = app;
+module.exports = {
+  app: app,
+  server: server
+};

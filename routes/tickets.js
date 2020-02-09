@@ -122,6 +122,7 @@ router.put('/details/edit/:ticket_id', isLoggedIn, async function (req, res) {
         ticket.ticket_history.push(pushIntoHistory)
       }
     }
+    res.io.emit('ticketUpdate', ticket)
     await ticket.save()
     res.redirect(`/tickets/details/${ticket.title}`)
   } catch (error) {
