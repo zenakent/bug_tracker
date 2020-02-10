@@ -1,7 +1,7 @@
-let mongoose = require('mongoose')
-let passportLocalMongoose = require('passport-local-mongoose')
+const mongoose = require('mongoose')
+const passportLocalMongoose = require('passport-local-mongoose')
 
-let UserSchema = new mongoose.Schema({
+const UserSchema = new mongoose.Schema({
   username: {
     type: String,
     unique: true
@@ -26,6 +26,10 @@ let UserSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Project'
   }],
+  notifications: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Notification'
+  }]
 })
 
 UserSchema.plugin(passportLocalMongoose, {

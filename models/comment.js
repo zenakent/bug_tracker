@@ -1,8 +1,8 @@
-let mongoose = require('mongoose')
-let Ticket = require('./ticket')
+const mongoose = require('mongoose')
+const Ticket = require('./ticket')
 
 
-let CommentSchema = new mongoose.Schema({
+const CommentSchema = new mongoose.Schema({
   commenter: {
     type: mongoose.Schema.Types.String,
     ref: 'User'

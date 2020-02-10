@@ -9,9 +9,8 @@ async function ticketPriority() {
     medium = 0,
     high = 0;
 
-  let response = await fetch(APIURL)
-  let foundTickets = await response.json()
-  console.log(foundTickets)
+  const response = await fetch(APIURL)
+  const foundTickets = await response.json()
   foundTickets.tickets.forEach(ticket => {
     if (ticket.priority === 'Low') {
       low++
@@ -22,9 +21,8 @@ async function ticketPriority() {
     }
   })
 
-  console.log(`low${low} medium${medium} high${high}`)
 
-  let ctx = document.getElementById('ticketPriorityChart')
+  const ctx = document.getElementById('ticketPriorityChart')
   let ticketPriorityChart = new Chart(ctx, {
     type: 'bar',
     data: {
@@ -66,8 +64,8 @@ async function ticketType() {
     aesthetic = 0,
     feature_request = 0,
     tech_issue = 0;
-  let response = await fetch(APIURL)
-  let foundTickets = await response.json()
+  const response = await fetch(APIURL)
+  const foundTickets = await response.json()
 
   foundTickets.tickets.forEach(ticket => {
     if (ticket.ticket_type === 'Bugs/Errors') {
@@ -81,7 +79,7 @@ async function ticketType() {
     }
   })
 
-  let ctx = document.getElementById('ticketTypeChart')
+  const ctx = document.getElementById('ticketTypeChart')
   let ticketTypeChart = new Chart(ctx, {
     type: 'pie',
     data: {
@@ -116,8 +114,8 @@ async function ticketStatus() {
     resolved = 0,
     in_progress = 0,
     more_info = 0;
-  let response = await fetch(APIURL)
-  let foundTickets = await response.json()
+  const response = await fetch(APIURL)
+  const foundTickets = await response.json()
 
   foundTickets.tickets.forEach(ticket => {
     switch (ticket.status) {
@@ -141,8 +139,7 @@ async function ticketStatus() {
     }
   })
 
-  console.log(`new:${newStat}, open:${open}, resolved:${resolved}, in_progress:${in_progress}, more_info:${more_info}`)
-  let ctx = document.getElementById('ticketStatusChart')
+  const ctx = document.getElementById('ticketStatusChart')
   let ticketStatusChart = new Chart(ctx, {
     type: 'bar',
     data: {

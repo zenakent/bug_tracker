@@ -1,7 +1,7 @@
-let mongoose = require('mongoose')
+const mongoose = require('mongoose')
 
 
-let ProjectSchema = new mongoose.Schema({
+const ProjectSchema = new mongoose.Schema({
   title: {
     type: String,
     unique: true
