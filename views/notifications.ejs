@@ -1,0 +1,50 @@
+<% include ./partials/header %>
+<% include ./partials/sideTopBar.ejs %>
+<%= console.log(foundUser) %>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="/js/dataTables.js"></script>
+
+<div class="container-fluid">
+  <div class="col-6">
+    <div class="card shadow mb-4">
+      <div class="card-header py-3 bg-primary">
+        <h6 class="m-0 font-weight-bold text-white">Notifications</h6>
+      </div>
+      <div class="card-body">
+        <table class="table table-striped" id="notificationTable">
+          <thead>
+            <tr>
+              <th scope="col" width="500">Notifications</th>
+              <th scope="col" width="500">Notified Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% foundUser.notifications.forEach(notification => {  %>
+            <tr>
+              <td><a href="<%= notification.link %>"><%= notification.message %></a></td>
+              <td><%= moment(notification.notified_date).format('lll')%></td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  $(document).ready(function () {
+    $('#notificationTable').DataTable({
+      "lengthMenu": [
+        [10, 25, 50, -1],
+        [10, 25, 50, "All"]
+      ]
+    });
+  });
+</script>
+
+
+<% include ./partials/botSideTopBar.ejs %>
+<% include ./partials/footer %>

@@ -37,6 +37,13 @@ router.put('/roleAssignment', isLoggedIn, function (req, res) {
     })
 })
 
+router.get('/notifications', isLoggedIn, async function (req, res) {
+  let foundUser = await db.User.findById(req.user.id).populate('notifications')
+  res.render('notifications', {
+    foundUser
+  })
+
+})
 
 
 module.exports = router;
