@@ -11,7 +11,7 @@
       <div class="card-body">
         <h6 class="card-subtitle mb-2 text-muted">Change the ticket properties</h6>
         <hr>
-        <form action="/tickets/details/edit/<%= ticket._id %>?_method=PUT" method="POST">
+        <form action="/tickets/details/edit/<%= ticket._id %>" method="POST">
           <div class="row">
             <div class="col-6">
               <div class="form-group">
@@ -21,12 +21,12 @@
               <div class="form-group">
                 <label for="Ticket Title">Ticket Priority</label>
                 <select class="custom-select" name="priority" id="ticket_priority" required>
-                  <% let options = ticket.schema.path('priority').enumValues %>                  
+                  <% let options = ticket.schema.path('priority').enumValues %>
                   <% for (let x = 0; x < options.length; x++)  { %>
                   <% if (options[x] === ticket.priority) { %>
-                    <option value="<%= options[x] %>" selected><%= options[x] %></option>
+                  <option value="<%= options[x] %>" selected><%= options[x] %></option>
                   <% } else { %>
-                    <option value="<%= options[x] %>"><%= options[x] %></option>  
+                  <option value="<%= options[x] %>"><%= options[x] %></option>
                   <% } %>
                   <% } %>
                 </select>
@@ -34,14 +34,14 @@
               <div class="form-group">
                 <label for="projectTitle">Ticket type</label>
                 <select class="custom-select" name="ticket_type" required>
-                  <% options = ticket.schema.path('ticket_type').enumValues %>                  
+                  <% options = ticket.schema.path('ticket_type').enumValues %>
                   <% for (let x = 0; x < options.length; x++)  { %>
-                    <% if (options[x] === ticket.ticket_type) { %>
-                      <option value="<%= options[x] %>" selected><%= options[x] %></option>
-                    <% } else { %>
-                      <option value="<%= options[x] %>"><%= options[x] %></option>  
-                    <% } %>
-                    <% } %>
+                  <% if (options[x] === ticket.ticket_type) { %>
+                  <option value="<%= options[x] %>" selected><%= options[x] %></option>
+                  <% } else { %>
+                  <option value="<%= options[x] %>"><%= options[x] %></option>
+                  <% } %>
+                  <% } %>
                   <option value="Bugs/Errors">Bugs/Errors</option>
                   <option value="Aesthetic">Aesthetic</option>
                   <option value="Feature Request">Feature Request</option>
@@ -52,7 +52,8 @@
             <div class="col-6">
               <div class="form-group">
                 <label for="Ticket Description">Ticket Description</label>
-                <input type="text" class="form-control" id="ticketDescription" name="description" value="<%= ticket.description %>">
+                <input type="text" class="form-control" id="ticketDescription" name="description"
+                  value="<%= ticket.description %>">
               </div>
               <div class="form-group">
                 <label for="projectDeveloper">Assigned Developer</label>
@@ -60,7 +61,7 @@
                   <% project.personnel.forEach(dev => { %>
                   <% if (dev.role == 'developer') { %>
                   <% if (dev.username === ticket.developer)  { %>
-                    <option value="<%= dev.username %>" selected><%= dev.username %></option>
+                  <option value="<%= dev.username %>" selected><%= dev.username %></option>
                   <% } else { %>
                   <option value="<%= dev.username %>"><%= dev.username %></option>
                   <% } %>
@@ -71,14 +72,14 @@
               <div class="form-group">
                 <label for="Ticket Status">Ticket Status</label>
                 <select class="custom-select" name="status" required>
-                  <% options = ticket.schema.path('status').enumValues %>                 
+                  <% options = ticket.schema.path('status').enumValues %>
                   <% for (let x = 0; x < options.length; x++)  { %>
-                    <% if (options[x] === ticket.status) { %>
-                      <option value="<%= options[x] %>" selected><%= options[x] %></option>
-                    <% } else { %>
-                      <option value="<%= options[x] %>"><%= options[x] %></option>  
-                    <% } %>
-                    <% } %>
+                  <% if (options[x] === ticket.status) { %>
+                  <option value="<%= options[x] %>" selected><%= options[x] %></option>
+                  <% } else { %>
+                  <option value="<%= options[x] %>"><%= options[x] %></option>
+                  <% } %>
+                  <% } %>
                 </select>
               </div>
             </div>

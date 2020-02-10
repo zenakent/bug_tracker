@@ -66,8 +66,16 @@ passport.use(new LocalStrategy({
 
 
 //locals
-app.use(function (req, res, next) {
+app.use(async function (req, res, next) {
   res.locals.currentUser = req.user
+  if (req.user) {
+    try {
+      const user = await db.User.findById(req.user._id).populate('notifications').exec()
+      res.locals.notifications = user.notifications
+    } catch (error) {
+      console.log(err);
+    }
+  }
   next()
 })
 app.locals.moment = require('moment')

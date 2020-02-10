@@ -51,14 +51,41 @@ router.post('/:project_name/create', isLoggedIn, async function (req, res) {
     let foundProject = await db.Project.findOne({
       title: req.body.project
     })
-    foundProject.tickets.push(ticket._id)
-    foundProject.save();
+
     //push ticket to submitter
     let foundSubmitter = await db.User.findOne({
       username: req.body.submitter
-    }) // console.log(foundSubmitter)
+    })
+
+    let foundDeveloper = await db.User.findOne({
+      username: req.body.developer
+    })
+
+    //make new notification
+    let notification = await db.Notification.create({
+      ticket_title: ticket.title,
+      notification_type: 'Ticket',
+      notified_date: Date.now(),
+      project_title: ticket.project,
+    })
+
+    notification.message = `${notification.notification_type} "${notification.ticket_title}" has been made in ${notification.project_title}`
+    notification.link = `/tickets/details/${notification.ticket_title}`
+    notification.save()
+
+
+    foundProject.tickets.push(ticket._id)
+    foundProject.save();
+
     foundSubmitter.tickets.push(ticket._id)
+    foundSubmitter.notifications.push(notification)
     foundSubmitter.save()
+
+    foundDeveloper.tickets.push(ticket._id)
+    foundDeveloper.notifications.push(notification)
+    foundDeveloper.save()
+
+    res.io.emit('newTicket', notification)
     res.redirect(`/projects/details/${req.body.project}`)
   } catch (error) {
     console.log(error)
@@ -104,7 +131,7 @@ router.get('/details/edit/:ticket_id', isLoggedIn, async function (req, res) {
 })
 
 //ticket history route(more like edit route)
-router.put('/details/edit/:ticket_id', isLoggedIn, async function (req, res) {
+router.post('/details/edit/:ticket_id', isLoggedIn, async function (req, res) {
   try {
     let ticket = await db.Ticket.findByIdAndUpdate(req.params.ticket_id)
     for (const prop in req.body) {
@@ -122,7 +149,34 @@ router.put('/details/edit/:ticket_id', isLoggedIn, async function (req, res) {
         ticket.ticket_history.push(pushIntoHistory)
       }
     }
-    res.io.emit('ticketUpdate', ticket)
+
+    //make new notification
+    let notification = await db.Notification.create({
+      ticket_title: ticket.title,
+      notification_type: 'Ticket',
+      notified_date: Date.now(),
+      project_title: ticket.project,
+    })
+    notification.link = `/tickets/details/${notification.ticket_title}`
+    notification.message = `${notification.notification_type} "${notification.ticket_title}" has been updated`
+    notification.save()
+    //find people that created the ticket and developer and
+    let developer = await db.User.findOne({
+      username: ticket.developer
+    })
+
+    let submitter = await db.User.findOne({
+      username: ticket.submitter
+    })
+
+    //push to their notification array
+    developer.notifications.push(notification)
+    submitter.notifications.push(notification)
+    //save
+    await developer.save()
+    await submitter.save()
+
+    res.io.emit('ticketUpdate', notification)
     await ticket.save()
     res.redirect(`/tickets/details/${ticket.title}`)
   } catch (error) {

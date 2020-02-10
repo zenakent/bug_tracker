@@ -52,14 +52,29 @@ router.get('/create', isLoggedIn, async function (req, res) {
 router.post('/create', isLoggedIn, async function (req, res) {
   try {
     let project = await db.Project.create(req.body)
+
+    let notification = await db.Notification.create({
+      notification_type: 'Project',
+      notified_date: Date.now(),
+      project_title: project.title,
+    })
+
+    notification.message = `A ${notification.notification_type} "${notification.project_title}" has been added to you`
+    notification.link = `/projects/details/${notification.project_title}`
+    notification.save()
+
     //add project to each personnel that is assigned
     project.personnel.forEach(async person => {
       let foundPerson = await db.User.findById(person)
+      foundPerson.notifications.push(notification)
       foundPerson.projects.push(project._id)
       foundPerson.save()
     })
+
+    req.user.notifications.push(notification)
     req.user.projects.push(project._id)
     req.user.save()
+    res.io.emit('newProject', notification)
     res.redirect("/projects")
   } catch (error) {
     console.log(error)

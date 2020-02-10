@@ -14,8 +14,10 @@ const NotificationSchema = new mongoose.Schema({
     type: String,
     enum: ['Ticket', 'Project']
   },
-  project_id: String,
-  ticket_id: String,
+  project_title: String,
+  ticket_title: String,
+  message: String,
+  link: String,
 })
 
 
