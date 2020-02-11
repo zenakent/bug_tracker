@@ -26,13 +26,15 @@ router.get('/:project_title/manageProjectUsers', isLoggedIn, async function (req
         title: req.params.project_title
       })
       .populate('personnel', {
-        username: true,
-        role: true
+        role: true,
+        first_name: true,
+        last_name: true
       });
 
     const foundUsers = await db.User.find({}, {
-      username: true,
-      role: true
+      role: true,
+      first_name: true,
+      last_name: true
     });
 
     //filter the non project personnel from the list of foundUsers and send it as a new list

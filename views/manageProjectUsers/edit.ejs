@@ -18,19 +18,19 @@
                 <% notPersonnel.forEach(user => { %>
                 <% if (user.role == 'admin') { %>
                 <optgroup label="Admin">
-                  <option value="<%= user._id %>"><%= user.username %></option>
+                  <option value="<%= user._id %>"><%= user.first_name %> <%= user.last_name %></option>
                 </optgroup>
                 <% } else if (user.role == 'project_manager') { %>
                 <optgroup label="Project Manager">
-                  <option value="<%= user._id %>"><%= user.username %></option>
+                  <option value="<%= user._id %>"><%= user.first_name %> <%= user.last_name %></option>
                 </optgroup>
                 <% } else if (user.role == 'developer') { %>
                 <optgroup label="Developer">
-                  <option value="<%= user._id %>"><%= user.username %></option>
+                  <option value="<%= user._id %>"><%= user.first_name %> <%= user.last_name %></option>
                 </optgroup>
                 <% } else if (user.role == 'submitter') { %>
                 <optgroup label="Submitter">
-                  <option value="<%= user._id %>"><%= user.username %></option>
+                  <option value="<%= user._id %>"><%= user.first_name %> <%= user.last_name %></option>
                 </optgroup>
                 <% } %>
                 <% }) %>
@@ -52,19 +52,19 @@
                 <% foundProject.personnel.forEach(person => { %>
                 <% if (person.role == 'admin') { %>
                 <optgroup label="Admin">
-                  <option value="<%= person._id %>"><%= person.username %></option>
+                  <option value="<%= person._id %>"><%= person.first_name %> <%= person.last_name %></option>
                 </optgroup>
                 <% } else if (person.role == 'project_manager') { %>
                 <optgroup label="Project Manager">
-                  <option value="<%= person._id %>"><%= person.username %></option>
+                  <option value="<%= person._id %>"><%= person.first_name %> <%= person.last_name %></option>
                 </optgroup>
                 <% } else if (person.role == 'developer') { %>
                 <optgroup label="Developer">
-                  <option value="<%= person._id %>"><%= person.username %></option>
+                  <option value="<%= person._id %>"><%= person.first_name %> <%= person.last_name %></option>
                 </optgroup>
                 <% } else if (person.role == 'submitter') { %>
                 <optgroup label="Submitter">
-                  <option value="<%= person._id %>"><%= person.username %></option>
+                  <option value="<%= person._id %>"><%= person.first_name %> <%= person.last_name %></option>
                 </optgroup>
                 <% } %>
                 <% }) %>
