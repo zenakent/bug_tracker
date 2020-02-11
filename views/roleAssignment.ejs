@@ -12,15 +12,31 @@
   <div class="row">
     <div class="col-3">
       <div class="card shadow mb-4">
-        <div class="card-header py-3">
-          <h6 class="m-0 font-weight-bold text-primary">Select one or more users</h6>
+        <div class="card-header py-3 bg-info">
+          <h6 class="m-0 font-weight-bold text-white">Select one or more users</h6>
         </div>
         <div class="card-body">
           <form action="/users/roleAssignment?_method=PUT" method="POST">
-            <select name="selectUser" class="custom-select" multiple>
+            <select name="selectUser" class="custom-select" size="15" multiple>
               <!-- <option selected>--Select User--</option> -->
               <% foundUsers.forEach(user => { %>
-              <option value="<%= user.username%>" name="<%= user.username%>"><%= user.username%></option>
+              <% if (user.role == 'admin') { %>
+              <optgroup label="Admin">
+                <option value="<%= user._id %>"><%= user.username %></option>
+              </optgroup>
+              <% } else if (user.role == 'project_manager') { %>
+              <optgroup label="Project Manager">
+                <option value="<%= user._id %>"><%= user.username %></option>
+              </optgroup>
+              <% } else if (user.role == 'developer') { %>
+              <optgroup label="Developer">
+                <option value="<%= user._id %>"><%= user.username %></option>
+              </optgroup>
+              <% } else if (user.role == 'submitter') { %>
+              <optgroup label="Submitter">
+                <option value="<%= user._id %>"><%= user.username %></option>
+              </optgroup>
+              <% } %>
               <% }) %>
             </select>
             <hr>
