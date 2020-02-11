@@ -84,6 +84,20 @@ router.post('/create', isLoggedIn, async function (req, res) {
   }
 })
 
+//update Project if it is completed
+router.put('/complete/:project_id', isLoggedIn, async function (req, res) {
+  try {
+    let foundProject = await db.Project.findById(req.params.project_id)
+    foundProject.project_completed = true
+    foundProject.completed_date = Date.now()
+    foundProject.save()
+    res.redirect('back')
+  } catch (error) {
+    console.log(error)
+    res.redirect('back')
+  }
+})
+
 //delete project
 router.delete('/delete/:id', isLoggedIn, async function (req, res) {
   try {

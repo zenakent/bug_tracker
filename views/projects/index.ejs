@@ -1,6 +1,5 @@
 <% include ../partials/header %>
 <% include ../partials/sideTopBar.ejs %>
-<%= console.log(currentUser) %>
 
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
 <script type="text/javascript" charset="utf8" src="/js/dataTables.js"></script>
@@ -16,7 +15,7 @@
     </a>
   </div>
   <%# } %>
-  <div class="row">
+  <div class="col-12">
     <div class="card shadow mb-4">
       <div class="card-header py-3 bg-info">
         <h6 class="m-0 font-weight-bold text-white">Projects</h6>
@@ -25,9 +24,11 @@
         <table class="table table-striped" id="projectTable">
           <thead>
             <tr>
-              <th scope="col" width="500">Project Name</th>
-              <th scope="col" width="500">Description</th>
-              <th scope="col" width="500"></th>
+              <th scope="col">Project Name</th>
+              <th scope="col">Description</th>
+              <th scope="col">Completed</th>
+
+              <th scope="col"></th>
             </tr>
           </thead>
           <tbody>
@@ -35,6 +36,12 @@
             <tr>
               <td><%= project.title %></td>
               <td><%= project.description %></td>
+              <td>
+                <% if (project.project_completed) { %>
+                <i class="fas fa-check-circle text-primary"></i>
+                <% } else { %>
+                <% } %>
+              </td>
               <td>
                 <ul>
                   <li><a href="/projects/details/<%= project.title %>">More Details</a></li>
