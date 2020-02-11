@@ -19,6 +19,11 @@ const ProjectSchema = new mongoose.Schema({
     type: Date,
     default: Date.now()
   },
+  project_completed: {
+    type: Boolean,
+    default: false
+  },
+  completed_date: Date
 })
 
 
