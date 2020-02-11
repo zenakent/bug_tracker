@@ -10,7 +10,7 @@ const {
 router.get('/', isLoggedIn, async function (req, res) {
   try {
     const foundProjects = await db.User.findById(req.user._id).populate('projects').exec();
-    res.render('manageUsers/index', {
+    res.render('manageProjectUsers/index', {
       foundProjects
     });
   } catch (error) {
@@ -52,7 +52,7 @@ router.get('/:project_title/manageProjectUsers', isLoggedIn, async function (req
     let onlyInB = users.filter(comparer(personnel));
     result = onlyInA.concat(onlyInB);
 
-    res.render('manageUsers/edit', {
+    res.render('manageProjectUsers/edit', {
       foundProject,
       foundUsers,
       notPersonnel: result

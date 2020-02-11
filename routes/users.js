@@ -42,7 +42,11 @@ router.get('/notifications', isLoggedIn, async function (req, res) {
   res.render('notifications', {
     foundUser
   })
+})
 
+router.get('/manageUsers', isLoggedIn, async function (req, res) {
+  let foundUser = await db.User.find()
+  res.render('managerUsers/index', foundUser)
 })
 
 

@@ -21,7 +21,17 @@
             </tr>
           </thead>
           <tbody>
-
+            <% foundProjects.projects.forEach(project => { %>
+            <tr>
+              <td><%= project.title %></td>
+              <td><%= project.description %></td>
+              <td>
+                <ul>
+                  <li><a href="/manageUsers/<%= project.title %>/manageProjectUsers">Manage Users</a></li>
+                </ul>
+              </td>
+            </tr>
+            <% }) %>
           </tbody>
         </table>
       </div>
