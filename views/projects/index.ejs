@@ -46,7 +46,7 @@
                 <ul>
                   <li><a href="/projects/details/<%= project.title %>">More Details</a></li>
                   <% if (currentUser.role !== 'submitter' && currentUser.role !== 'developer') { %>
-                  <li><a href="/manageProjectUsers/<%= project.title %>/manageProjectUsers">Manage Users</a></li>
+                  <li><a href="/manageProjectUsers/<%= project.title %>/manageProjectUsers">Manage Personnel</a></li>
                   <% } %>
                 </ul>
               </td>
