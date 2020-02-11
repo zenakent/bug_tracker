@@ -88,6 +88,8 @@ app.use(async function (req, res, next) {
       console.log(err);
     }
   }
+  res.locals.error = req.flash("error");
+  res.locals.success = req.flash("success");
   next()
 })
 app.locals.moment = require('moment')
