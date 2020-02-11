@@ -3,11 +3,13 @@ const router = express.Router();
 const db = require('../models')
 
 const {
-  isLoggedIn
+  isLoggedIn,
+  isAdmin,
+  isProjectManager
 } = require("../middleware/index.js");
 
 //api for ticket for every ticket for the user
-router.get('/tickets', async (req, res) => {
+router.get('/tickets', isLoggedIn, async (req, res) => {
   let foundUser = await db.User.findById(req.user._id).populate('tickets', {
     ticket_history: false,
     comments: false,
