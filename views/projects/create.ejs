@@ -21,9 +21,25 @@
             </div>
             <div class="form-group">
               <label for="projectDeveloper">Project Personnel</label>
-              <select class="custom-select" name="personnel" multiple required>
+              <select class="custom-select form-control" name="personnel" multiple size="15" required>
                 <% foundUsers.forEach(user => { %>
-                <option value="<%= user._id%>"><%= user.username %></option>
+                <% if (user.role == 'admin') { %>
+                <optgroup label="Admin">
+                  <option value="<%= user._id %>"><%= user.username %></option>
+                </optgroup>
+                <% } else if (user.role == 'project_manager') { %>
+                <optgroup label="Project Manager">
+                  <option value="<%= user._id %>"><%= user.username %></option>
+                </optgroup>
+                <% } else if (user.role == 'developer') { %>
+                <optgroup label="Developer">
+                  <option value="<%= user._id %>"><%= user.username %></option>
+                </optgroup>
+                <% } else if (user.role == 'submitter') { %>
+                <optgroup label="Submitter">
+                  <option value="<%= user._id %>"><%= user.username %></option>
+                </optgroup>
+                <% } %>
                 <% }) %>
 
               </select>

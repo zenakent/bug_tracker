@@ -14,9 +14,25 @@
 
             <div class="col-xs-5 col-md-5 col-sm-5">
               <h5 class="card-title">Unassigned Personnel</h5>
-              <select name="notPersonnel" id="mySideToSideSelect" class="form-control" size="8" multiple="multiple">
+              <select name="notPersonnel" id="mySideToSideSelect" class="form-control" size="20" multiple="multiple">
                 <% notPersonnel.forEach(user => { %>
-                <option value="<%= user._id%>"><%= user.username %></option>
+                <% if (user.role == 'admin') { %>
+                <optgroup label="Admin">
+                  <option value="<%= user._id %>"><%= user.username %></option>
+                </optgroup>
+                <% } else if (user.role == 'project_manager') { %>
+                <optgroup label="Project Manager">
+                  <option value="<%= user._id %>"><%= user.username %></option>
+                </optgroup>
+                <% } else if (user.role == 'developer') { %>
+                <optgroup label="Developer">
+                  <option value="<%= user._id %>"><%= user.username %></option>
+                </optgroup>
+                <% } else if (user.role == 'submitter') { %>
+                <optgroup label="Submitter">
+                  <option value="<%= user._id %>"><%= user.username %></option>
+                </optgroup>
+                <% } %>
                 <% }) %>
               </select>
             </div>
@@ -32,9 +48,25 @@
             <!-- Right side select -->
             <div class="col-xs-5 col-md-5 col-sm-5">
               <h5 class="card-title">Assigned Personnel</h5>
-              <select name="personnel" id="mySideToSideSelect_to" class="form-control" size="8" multiple="multiple">
+              <select name="personnel" id="mySideToSideSelect_to" class="form-control" size="20" multiple="multiple">
                 <% foundProject.personnel.forEach(person => { %>
-                <option value="<%= person._id %>"><%= person.username %></option>
+                <% if (person.role == 'admin') { %>
+                <optgroup label="Admin">
+                  <option value="<%= person._id %>"><%= person.username %></option>
+                </optgroup>
+                <% } else if (person.role == 'project_manager') { %>
+                <optgroup label="Project Manager">
+                  <option value="<%= person._id %>"><%= person.username %></option>
+                </optgroup>
+                <% } else if (person.role == 'developer') { %>
+                <optgroup label="Developer">
+                  <option value="<%= person._id %>"><%= person.username %></option>
+                </optgroup>
+                <% } else if (person.role == 'submitter') { %>
+                <optgroup label="Submitter">
+                  <option value="<%= person._id %>"><%= person.username %></option>
+                </optgroup>
+                <% } %>
                 <% }) %>
               </select>
             </div>
