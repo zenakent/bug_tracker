@@ -4,7 +4,9 @@ const db = require('../models')
 
 const {
   isLoggedIn,
-  isDeveloper
+  isDeveloper,
+  isAdmin,
+  isProjectManager
 } = require("../middleware/index.js");
 
 router.get('/', isLoggedIn, async function (req, res) {

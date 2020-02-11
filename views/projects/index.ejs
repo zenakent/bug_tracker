@@ -1,10 +1,12 @@
 <% include ../partials/header %>
 <% include ../partials/sideTopBar.ejs %>
+<%= console.log(currentUser) %>
 
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
 <script type="text/javascript" charset="utf8" src="/js/dataTables.js"></script>
 
 <div class="container-fluid">
+  <%# if (currentUser.role !== 'submitter') { %>
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <a href="/projects/create" class="btn btn-primary btn-icon-split">
       <span class="icon text-white-50">
@@ -13,6 +15,7 @@
       <span class="text">New Project</span>
     </a>
   </div>
+  <%# } %>
   <div class="row">
     <div class="card shadow mb-4">
       <div class="card-header py-3 bg-info">
@@ -35,7 +38,9 @@
               <td>
                 <ul>
                   <li><a href="/projects/details/<%= project.title %>">More Details</a></li>
+                  <% if (currentUser.role !== 'submitter' && currentUser.role !== 'developer') { %>
                   <li><a href="/manageProjectUsers/<%= project.title %>/manageProjectUsers">Manage Users</a></li>
+                  <% } %>
                 </ul>
               </td>
             </tr>

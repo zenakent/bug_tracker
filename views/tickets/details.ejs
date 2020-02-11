@@ -61,10 +61,12 @@
               <h5 class="card-title">Ticket Created</h5>
               <p><%= moment(ticket.createdAt).format('lll') %></p>
             </div>
+            <% if (currentUser.role !== 'submitter') { %>
             <div class="col-6">
               <h5 class="card-title">Update Ticket</h5>
               <a href="/tickets/details/edit/<%= ticket._id %>" class="btn btn-primary">Update Ticket</a>
             </div>
+            <% } %>
           </div>
           <hr>
         </div>

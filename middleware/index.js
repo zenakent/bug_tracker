@@ -12,7 +12,7 @@
   };
 
   middlewareObj.isAdmin = function (req, res, next) {
-    console.log(req.user)
+    console.log(req.user.role)
     if (req.user.role === 'admin') {
       return next();
     } else {
@@ -23,7 +23,7 @@
   };
 
   middlewareObj.isProjectManager = function (req, res, next) {
-    console.log(req.user)
+    console.log(req.user.role)
     if (req.user.role === 'project_manager') {
       return next();
     } else {
@@ -33,7 +33,7 @@
   };
 
   middlewareObj.isDeveloper = function (req, res, next) {
-    console.log(req.user)
+    console.log(req.user.role)
     if (req.user.role === 'developer') {
       return next();
     } else {

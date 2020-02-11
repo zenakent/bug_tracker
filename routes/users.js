@@ -3,7 +3,8 @@ const router = express.Router();
 const db = require('../models')
 
 const {
-  isLoggedIn
+  isLoggedIn,
+  isAdmin,
 } = require("../middleware/index.js");
 
 /* GET users listing. */
@@ -11,7 +12,7 @@ router.get('/', isLoggedIn, function (req, res, next) {
   res.render("dashboard")
 });
 
-router.get('/roleAssignment', isLoggedIn, function (req, res, next) {
+router.get('/roleAssignment', isLoggedIn, isAdmin, function (req, res, next) {
   db.User.find({})
     .then(foundUsers => {
       res.render('roleAssignment', {
@@ -21,7 +22,7 @@ router.get('/roleAssignment', isLoggedIn, function (req, res, next) {
     .catch(err => console.log(err))
 })
 
-router.put('/roleAssignment', isLoggedIn, function (req, res) {
+router.put('/roleAssignment', isLoggedIn, isAdmin, function (req, res) {
   db.User.find({
       username: req.body.selectUser
     })
