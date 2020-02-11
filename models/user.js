@@ -15,8 +15,8 @@ const UserSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ['admin', 'project_manager', 'developer', 'submitter', 'none'],
-    default: 'none'
+    enum: ['admin', 'project_manager', 'developer', 'submitter'],
+    default: 'submitter'
   },
   tickets: [{
     type: mongoose.Schema.Types.ObjectId,
