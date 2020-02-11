@@ -8,6 +8,7 @@ const passport = require('passport')
 const LocalStrategy = require('passport-local')
 const passportLocalMongoose = require('passport-local-mongoose')
 const methodOverride = require("method-override"); //Lets you use HTTP verbs such as PUT or DELETE in places where the client doesn't support it.
+const flash = require("connect-flash");
 
 
 
@@ -20,6 +21,7 @@ const commentRouter = require('./routes/comments');
 const manageUsersProjectRouter = require('./routes/manageProjectUsers')
 const chartsApiRouter = require('./routes/chartsAPI')
 const manageUsersRouter = require('./routes/manageUsers')
+const profileRouter = require('./routes/profile')
 
 const app = express();
 const server = require('http').Server(app);
@@ -43,6 +45,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({
   extended: true
 }))
+app.use(flash());
 
 app.use(require('express-session')({
   secret: '348956y734h563k4j6',
@@ -50,10 +53,18 @@ app.use(require('express-session')({
   saveUninitialized: false
 }))
 
+//use socket.io on routes
 app.use(function (req, res, next) {
   res.io = io;
   next();
 });
+
+
+app.use(require("express-session")({
+  secret: "sjkldbgk;sjfbnghsjk;brnhgk;rf",
+  resave: false,
+  saveUninitialized: false
+}));
 
 //use passport 
 app.use(passport.initialize())
@@ -92,6 +103,7 @@ app.use('/comments', commentRouter);
 app.use('/manageProjectUsers', manageUsersProjectRouter);
 app.use('/api/charts', chartsApiRouter);
 app.use('/manageUsers', manageUsersRouter);
+app.use('/profile', profileRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
