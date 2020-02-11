@@ -28,11 +28,11 @@
   </div>
 
   <!-- Nav Item - Pages Collapse Menu -->
+  <% if (currentUser.role === 'admin') { %>
   <li class="nav-item">
     <a href="/users/roleAssignment" class="nav-link "><i class="fas fa-user-tag"></i><span>Manage Role
         Assignments</span></a>
   </li>
-  <% if (currentUser.role === 'admin') { %>
   <li class="nav-item">
     <a href="/manageUsers" class="nav-link "><i class="fas fa-users"></i><span>Manage Users</span></a>
   </li>
