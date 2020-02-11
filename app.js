@@ -17,8 +17,9 @@ const usersRouter = require('./routes/users');
 const projectRouter = require('./routes/projects');
 const ticketRouter = require('./routes/tickets');
 const commentRouter = require('./routes/comments');
-const manageUsersRouter = require('./routes/manageProjectUsers')
+const manageUsersProjectRouter = require('./routes/manageProjectUsers')
 const chartsApiRouter = require('./routes/chartsAPI')
+const manageUsersRouter = require('./routes/manageUsers')
 
 const app = express();
 const server = require('http').Server(app);
@@ -88,8 +89,9 @@ app.use('/users', usersRouter);
 app.use('/projects', projectRouter);
 app.use('/tickets', ticketRouter);
 app.use('/comments', commentRouter);
-app.use('/manageProjectUsers', manageUsersRouter);
+app.use('/manageProjectUsers', manageUsersProjectRouter);
 app.use('/api/charts', chartsApiRouter);
+app.use('/manageUsers', manageUsersRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

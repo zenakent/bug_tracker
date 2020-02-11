@@ -27,10 +27,6 @@ router.post('/create', isLoggedIn, async function (req, res) {
   }
 })
 
-// router.get('/delete/:id', function (req, res) {
-//   res.send(req.params.id)
-// })
-
 //delete comment
 router.delete('/delete/:id', isLoggedIn, async (req, res) => {
   try {

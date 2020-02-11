@@ -1,8 +1,8 @@
-let express = require('express');
-let router = express.Router();
-let db = require('../models')
+const express = require('express');
+const router = express.Router();
+const db = require('../models')
 
-let {
+const {
   isLoggedIn
 } = require("../middleware/index.js");
 
@@ -43,11 +43,5 @@ router.get('/notifications', isLoggedIn, async function (req, res) {
     foundUser
   })
 })
-
-router.get('/manageUsers', isLoggedIn, async function (req, res) {
-  let foundUser = await db.User.find()
-  res.render('managerUsers/index', foundUser)
-})
-
 
 module.exports = router;
