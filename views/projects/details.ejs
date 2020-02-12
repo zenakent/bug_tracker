@@ -98,8 +98,8 @@
               <h6 class="card-subtitle mb-2 text-muted">Project Completed at</h6>
               <%= moment(foundProject.completed_date).format('lll') %>
             </div>
-
           </div>
+          <% if (currentUser.role !== 'submitter') { %>
           <hr>
           <div class="row d-flex justify-content-around">
             <!-- Button trigger modal -->
@@ -160,14 +160,11 @@
                 </div>
               </div>
             </div>
-
-
           </div>
+          <% } %>
         </div>
       </div>
     </div>
-
-
   </div>
 </div>
 
