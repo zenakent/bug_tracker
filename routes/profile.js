@@ -14,6 +14,7 @@ router.get('/', isLoggedIn, async function (req, res) {
     })
   } catch (error) {
     console.log(error)
+    req.flash('error', `Something went wrong`)
     res.redirect('back')
   }
 })
@@ -25,9 +26,11 @@ router.put('/update/:id', async function (req, res) {
     foundUser.last_name = req.body.last_name
     foundUser.email = req.body.email
     foundUser.save()
+    req.flash('success', `You've updated your profile`)
     res.redirect('/profile')
   } catch (error) {
     console.log(error)
+    req.flash('error', `Something went wrong`)
     res.redirect('back')
   }
 })

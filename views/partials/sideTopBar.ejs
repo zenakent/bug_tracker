@@ -16,3 +16,15 @@
       <!-- End of Topbar -->
 
       <!-- Begin Page Content -->
+      <div class="container">
+        <% if (err_msg && err_msg.length > 0) { %>
+        <div class="alert alert-danger" role="alert">
+          <%= err_msg %>
+        </div>
+        <% } %>
+        <% if (success_msg && success_msg.length > 0) { %>
+        <div class="alert alert-success" role="alert">
+          <%= success_msg %>
+        </div>
+        <% } %>
+      </div>

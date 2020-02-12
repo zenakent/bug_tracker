@@ -23,6 +23,7 @@ router.post('/create', isLoggedIn, async function (req, res) {
     res.redirect('back')
   } catch (error) {
     console.log(error);
+    req.flash('error', `Something went wrong`)
     res.redirect('back')
   }
 })
@@ -35,6 +36,7 @@ router.delete('/delete/:id', isLoggedIn, async (req, res) => {
     res.redirect('back')
   } catch (error) {
     console.log(error);
+    req.flash('error', `Something went wrong`)
     res.redirect('back')
   }
 })

@@ -5,6 +5,16 @@
       <div class="card">
         <div class="card-body">
           <h5 class="card-title text-center">Bug Tracker Login</h5>
+          <% if (err_msg && err_msg.length > 0) { %>
+          <div class="alert alert-danger" role="alert">
+            <%= err_msg %>
+          </div>
+          <% } %>
+          <% if (success_msg && success_msg.length > 0) { %>
+          <div class="alert alert-success" role="alert">
+            <%= success_msg %>
+          </div>
+          <% } %>
 
           <form action="/login" method="post">
             <div class="form-group">

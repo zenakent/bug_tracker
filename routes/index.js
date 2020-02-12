@@ -6,7 +6,7 @@ const passport = require('passport')
 /* GET home page. */
 router.get('/', function (req, res, next) {
   res.render('index', {
-    title: 'Bug Tracker'
+    title: 'Bug Tracker',
   });
 });
 
@@ -122,12 +122,13 @@ router.post("/login", passport.authenticate("local", {
   successRedirect: "/users",
   failureRedirect: "/"
 }), function (req, res) {
-  console.log("MAui")
+  req.flash("success", `Welcome`)
 })
 
 //logout route
 router.get('/logout', function (req, res) {
   req.logout()
+  req.flash('success', 'Successfully logged out')
   res.redirect("/")
 })
 

@@ -15,6 +15,7 @@ router.get('/', isLoggedIn, async function (req, res) {
     });
   } catch (error) {
     console.log(error);
+    req.flash('error', `Something went wrong`)
     res.redirect('back');
   }
 });
@@ -61,6 +62,7 @@ router.get('/:project_title/manageProjectUsers', isLoggedIn, async function (req
     });
   } catch (error) {
     console.log(error);
+    req.flash('error', `Something went wrong`)
     res.redirect('back');
   }
 });
@@ -104,9 +106,11 @@ router.put('/:project_title/manageProjectUsers', isLoggedIn, async function (req
 
     foundProject.personnel = req.body.personnel;
     foundProject.save();
+    req.flash('success', `You've updated your project personnel`)
     res.redirect(`/projects/details/${req.params.project_title}`);
   } catch (error) {
     console.log(error);
+    req.flash('error', `Something went wrong`)
     res.redirect('back');
   }
 });

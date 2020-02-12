@@ -31,9 +31,11 @@ router.put('/roleAssignment', isLoggedIn, isAdmin, function (req, res) {
         eachUser.role = req.body.selectRole
         eachUser.save()
       })
+      req.flash('success', `You've changed role assignments`)
       res.redirect('/users/roleAssignment')
     })
     .catch(err => {
+      req.flash('error', `Something went wrong`)
       console.log(err)
     })
 })

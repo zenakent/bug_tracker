@@ -77,9 +77,11 @@ router.post('/create', isLoggedIn, async function (req, res) {
     req.user.projects.push(project._id)
     req.user.save()
     res.io.emit('newProject', notification)
+    req.flash('success', `You've made Project "${project.title}"`)
     res.redirect("/projects")
   } catch (error) {
     console.log(error)
+    req.flash('error', `Something went wrong`)
     res.redirect('back')
   }
 })
@@ -91,9 +93,11 @@ router.put('/complete/:project_id', isLoggedIn, async function (req, res) {
     foundProject.project_completed = true
     foundProject.completed_date = Date.now()
     foundProject.save()
+    req.flash('success', `You've completed the project "${foundProject.title}"`)
     res.redirect('back')
   } catch (error) {
     console.log(error)
+    req.flash('error', `Something went wrong`)
     res.redirect('back')
   }
 })
@@ -102,10 +106,12 @@ router.put('/complete/:project_id', isLoggedIn, async function (req, res) {
 router.delete('/delete/:id', isLoggedIn, async function (req, res) {
   try {
     let project = await db.Project.findById(req.params.id)
+    req.flash('success', `You've removed project "${project.title}"`)
     project.remove()
-    res.redirect('back')
+    res.redirect('/projects')
   } catch (error) {
     console.log(error)
+    req.flash('error', `Something went wrong`)
     res.redirect('back')
   }
 })

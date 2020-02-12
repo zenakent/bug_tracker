@@ -7,6 +7,7 @@
       return next();
     } else {
       console.log('not logged in')
+      req.flash('error', 'You need to Log in');
       res.redirect("/");
     }
   };

@@ -86,9 +86,11 @@ router.post('/:project_name/create', isLoggedIn, async function (req, res) {
     foundDeveloper.save()
 
     res.io.emit('newTicket', notification)
+    req.flash('success', `You've created a new ticket`)
     res.redirect(`/projects/details/${req.body.project}`)
   } catch (error) {
     console.log(error)
+    req.flash('error', `Something went wrong`)
     res.redirect('back')
   }
 })
@@ -181,6 +183,7 @@ router.post('/details/edit/:ticket_id', isLoggedIn, async function (req, res) {
     res.redirect(`/tickets/details/${ticket.title}`)
   } catch (error) {
     console.log(error)
+    req.flash('error', `Something went wrong`)
     res.redirect('back')
   }
 })
