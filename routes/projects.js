@@ -4,14 +4,10 @@ const db = require('../models')
 
 const {
   isLoggedIn,
-  isDeveloper,
-  isAdmin,
-  isProjectManager
 } = require("../middleware/index.js");
 
 router.get('/', isLoggedIn, async function (req, res) {
   try {
-
     const foundProjects = await db.User.findById(req.user._id).populate('projects').exec();
     res.render('projects/index', {
       foundProjects
@@ -54,13 +50,12 @@ router.get('/create', isLoggedIn, async function (req, res) {
 router.post('/create', isLoggedIn, async function (req, res) {
   try {
     let project = await db.Project.create(req.body)
-
+    console.log(req.user)
     let notification = await db.Notification.create({
       notification_type: 'Project',
       notified_date: Date.now(),
       project_title: project.title,
     })
-
     notification.message = `A ${notification.notification_type} "${notification.project_title}" has been added to you`
     notification.link = `/projects/details/${notification.project_title}`
     notification.save()
@@ -68,11 +63,12 @@ router.post('/create', isLoggedIn, async function (req, res) {
     //add project to each personnel that is assigned
     project.personnel.forEach(async person => {
       let foundPerson = await db.User.findById(person)
-      foundPerson.notifications.push(notification)
-      foundPerson.projects.push(project._id)
-      foundPerson.save()
+      if (person.toString() !== req.user._id.toString()) {
+        foundPerson.notifications.push(notification)
+        foundPerson.projects.push(project._id)
+        foundPerson.save()
+      }
     })
-
     req.user.notifications.push(notification)
     req.user.projects.push(project._id)
     req.user.save()
@@ -81,7 +77,7 @@ router.post('/create', isLoggedIn, async function (req, res) {
     res.redirect("/projects")
   } catch (error) {
     console.log(error)
-    req.flash('error', `Something went wrong`)
+    req.flash('error', `Duplicate Title ${error.errmsg}`)
     res.redirect('back')
   }
 })
