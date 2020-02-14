@@ -2,7 +2,8 @@
 Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
 Chart.defaults.global.defaultFontColor = '#858796';
 
-const APIURL = 'http://localhost:3000/api/charts/tickets' || 'https://mauisbugtracker.herokuapp.com/api/charts/tickets'
+// const APIURL = 'http://localhost:3000/api/charts/ticket'
+const APIURL = 'https://mauisbugtracker.herokuapp.com/api/charts/tickets'
 
 async function ticketPriority() {
   let low = 0,
@@ -10,6 +11,7 @@ async function ticketPriority() {
     high = 0;
 
   const response = await fetch(APIURL)
+  console.log(response)
   const foundTickets = await response.json()
   foundTickets.tickets.forEach(ticket => {
     if (ticket.priority === 'Low') {
