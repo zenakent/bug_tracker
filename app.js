@@ -24,6 +24,7 @@ const manageUsersProjectRouter = require('./routes/manageProjectUsers')
 const chartsApiRouter = require('./routes/chartsAPI')
 const manageUsersRouter = require('./routes/manageUsers')
 const profileRouter = require('./routes/profile')
+const notificationsRouter = require('./routes/notifications')
 
 const app = express();
 const server = require('http').Server(app);
@@ -84,7 +85,9 @@ app.use(async function (req, res, next) {
   res.locals.currentUser = req.user
   if (req.user) {
     try {
-      const user = await db.User.findById(req.user._id).populate('notifications').exec()
+      const user = await db.User.findById(req.user._id).populate('notifications', null, {
+        isRead: false
+      }).exec()
       res.locals.notifications = user.notifications
     } catch (error) {
       console.log(err);
@@ -108,6 +111,7 @@ app.use('/manageProjectUsers', manageUsersProjectRouter);
 app.use('/api/charts', chartsApiRouter);
 app.use('/manageUsers', manageUsersRouter);
 app.use('/profile', profileRouter);
+app.use('/notifications', notificationsRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
