@@ -1,0 +1,7 @@
+{
+  "proxies": {
+    "/api/charts/tickets": {
+      "origin": "https://mauisbugtracker.herokuapp.com/api/charts/tickets"
+    }
+  }
+}
