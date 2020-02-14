@@ -22,9 +22,14 @@ router.get('/', isLoggedIn, async function (req, res) {
 router.delete('/delete/:id', async function (req, res) {
   try {
     let foundUser = await db.User.findById(req.params.id)
-    req.flash('success', `You've deleted ${foundUser.first_name} ${foundUser.last_name}`)
-    foundUser.remove()
-    res.redirect('back')
+    if (foundUser.username !== 'demoAdmin' && foundUser.username !== 'demoProjectManager' && foundUser.username !== 'fakeuser' && foundUser.username !== 'demoDeveloper') {
+      req.flash('success', `You've deleted ${foundUser.first_name} ${foundUser.last_name}`)
+      foundUser.remove()
+      res.redirect('back')
+    } else {
+      req.flash('error', 'Cannot delete Demo accounts')
+      res.redirect('back')
+    }
   } catch (error) {
     console.log(error)
     req.flash('error', `Something went wrong`)
