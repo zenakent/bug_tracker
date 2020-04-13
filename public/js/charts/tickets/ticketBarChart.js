@@ -2,8 +2,8 @@
 Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
 Chart.defaults.global.defaultFontColor = '#858796';
 
-// let APIURL = 'http://localhost:3000/api/charts/tickets'
-let APIURL = 'https://mauisbugtracker.herokuapp.com/api/charts/tickets'
+let APIURL = '/api/charts/tickets'
+// let APIURL = 'https://mauisbugtracker.herokuapp.com/api/charts/tickets'
 
 async function ticketPriority() {
   try {
@@ -61,8 +61,7 @@ async function ticketPriority() {
     });
   } catch (error) {
     console.log(error);
-    APIURL = 'http://localhost:3000/api/charts/tickets'
-    ticketPriority()
+
   }
 }
 
@@ -117,8 +116,7 @@ async function ticketType() {
     });
   } catch (error) {
     console.log(error);
-    APIURL = 'http://localhost:3000/api/charts/tickets'
-    ticketType()
+
   }
 };
 
@@ -187,8 +185,7 @@ async function ticketStatus() {
     })
   } catch (error) {
     console.log(error);
-    APIURL = 'http://localhost:3000/api/charts/tickets'
-    ticketStatus()
+
   }
 }
 
