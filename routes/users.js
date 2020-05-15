@@ -23,11 +23,14 @@ router.get('/roleAssignment', isLoggedIn, isAdmin, function (req, res, next) {
 })
 
 router.put('/roleAssignment', isLoggedIn, isAdmin, function (req, res) {
+  console.log('req.body', req.body)
   db.User.find({
-      username: req.body.selectUser
+      _id: req.body.selectUser
     })
     .then(user => {
+      console.log('user', user)
       user.forEach(eachUser => {
+        console.log(req.body.selectRole)
         eachUser.role = req.body.selectRole
         eachUser.save()
       })
